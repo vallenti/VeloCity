@@ -1,0 +1,30 @@
+<h1>Велостанции</h1>
+
+<p *ngIf="!stations"><em>Loading...</em></p>
+
+<button>Добави станция</button>
+
+<table class='table table-striped' *ngIf="stations">
+  <thead>
+    <tr>
+      <th>Име</th>
+      <th>Налични велосипеди</th>
+      <th>Координати</th>
+      <th>Последно актуализирано</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let station of stations">
+      <td>{{ station.name }}</td>
+      <td>{{ station.capacity }} / {{ station.capacity }}</td>
+      <td>{{ station.latitude }}, {{ station.longitude }}</td>
+      <td>{{ station.updatedAt }}</td>
+      <td>
+        <a href="#">Редатирай</a>
+        <span> | </span>
+        <a href="#">Изтрий</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

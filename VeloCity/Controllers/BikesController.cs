@@ -29,7 +29,6 @@ namespace VeloCity.Controllers
         {
             return await _context.Bikes
                 .Include(b => b.BikeType)
-                .Include(b => b.ParkedAt)
                 .ToListAsync();
         }
 

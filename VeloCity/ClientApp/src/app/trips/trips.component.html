@@ -1,0 +1,28 @@
+<h1>Пътувания</h1>
+
+<p *ngIf="!trips"><em>Loading...</em></p>
+
+<table class='table table-striped' *ngIf="trips">
+  <thead>
+    <tr>
+      <th>Номер</th>
+      <th>Начало</th>
+      <th>Край</th>
+      <th>Потребител</th>
+      <th>Велосипед</th>
+      <th>Сума</th>
+      <th>Време</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let trip of trips">
+      <td>{{ trip.id }}</td>
+      <td>{{ trip.start }}</td>
+      <td>{{ trip.end }}</td>
+      <td>{{ trip.userId }}</td>
+      <td>{{ trip.bikeId }}</td>
+      <td>{{ trip.totalAmount }}</td>
+      <td>{{ trip.totalMinutes }}</td>
+    </tr>
+  </tbody>
+</table>

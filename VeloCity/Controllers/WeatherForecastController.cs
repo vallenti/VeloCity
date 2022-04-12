@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VeloCity.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

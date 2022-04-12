@@ -1,0 +1,30 @@
+<h1>Велосипеди</h1>
+
+<p *ngIf="!bikes"><em>Loading...</em></p>
+
+<button>Добави велосипед</button>
+
+<table class='table table-striped' *ngIf="bikes">
+  <thead>
+    <tr>
+      <th>Номер</th>
+      <th>Статус</th>
+      <th>Вид</th>
+      <th>Велостанция</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let bike of bikes">
+      <td>{{ bike.id }}</td>
+      <td>{{ bike.status }}</td>
+      <td>{{ bike.bikeTypeId }}</td>
+      <td>TODO</td>
+      <td>
+        <a href="#">Редатирай</a>
+        <span> | </span>
+        <a href="#">Изтрий</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
