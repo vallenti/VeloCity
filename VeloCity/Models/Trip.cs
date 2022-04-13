@@ -11,6 +11,8 @@ namespace VeloCity.Models
             this.Bike = bike;
         }
 
+        private Trip() { } //Used by EF
+
         public int Id { get; private set; }
 
         public DateTime Start { get; private set; }

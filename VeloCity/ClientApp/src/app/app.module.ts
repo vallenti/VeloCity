@@ -13,6 +13,7 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { StationsComponent } from './stations/stations.component';
 import { BikesComponent } from './bikes/bikes.component';
 import { TripsComponent } from './trips/trips.component';
+import { StationsService } from '../services/stations.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TripsComponent } from './trips/trips.component';
     ])
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    StationsService
   ],
   bootstrap: [AppComponent]
 })

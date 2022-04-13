@@ -1,19 +1,21 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { IStation } from '../../interfaces/IStation';
+import { StationsService } from '../../services/stations.service';
 
 @Component({
   selector: 'app-stations',
   templateUrl: './stations.component.html',
   styleUrls: ['./stations.component.css']
 })
-export class StationsComponent {
+export class StationsComponent implements OnInit{
   public stations: IStation[] = [];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<IStation[]>(baseUrl + 'api/stations').subscribe(result => {
-      this.stations = result;
-    }, error => console.error(error));
+  constructor(private stationsService: StationsService) {
+    
+  }
+
+  ngOnInit(): void {
+    this.stations = this.stationsService.getStations();
   }
 }
 
