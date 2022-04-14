@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IStation } from '../interfaces/IStation';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -13,11 +14,7 @@ export class StationsService {
     @Inject('BASE_URL') private baseUrl: string) {
   }
 
-  getStations(): IStation[] {
-    this.http.get<IStation[]>(this.baseUrl + 'api/stations').subscribe(result => {
-      this.stations = result;
-    }, error => console.error(error));
-
-    return this.stations;
+  loadStations(): Observable<IStation[]> {
+    return this.http.get<IStation[]>(this.baseUrl + 'api/stations');
   }
 }

@@ -5,4 +5,15 @@
 <span> | </span>
 <button>Върни велосипед</button>
 
-<p>TODO: GoogleMaps with stations</p>
+<google-map height="500px"
+            width="100%"
+            [zoom]="zoom"
+            [center]="center"
+            [options]="options">
+  <map-marker *ngFor="let marker of markers"
+              [position]="marker.position"
+              [label]="marker.label"
+              [title]="marker.title"
+              [options]="marker.options">
+  </map-marker>
+</google-map>

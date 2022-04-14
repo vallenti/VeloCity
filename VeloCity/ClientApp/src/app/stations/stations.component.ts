@@ -15,7 +15,7 @@ export class StationsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.stations = this.stationsService.getStations();
+    this.stationsService.loadStations().subscribe(stations => this.stations = stations);
   }
 }
 
