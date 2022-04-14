@@ -17,7 +17,7 @@
   <tbody>
     <tr *ngFor="let station of stations">
       <td>{{ station.name }}</td>
-      <td>{{ station.capacity }} / {{ station.capacity }}</td>
+      <td>{{ station.availableBikes }} / {{ station.capacity }}</td>
       <td>{{ station.latitude }}, {{ station.longitude }}</td>
       <td>{{ station.updatedAt }}</td>
       <td>

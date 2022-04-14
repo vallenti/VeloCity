@@ -4,9 +4,7 @@ import { IStation } from '../interfaces/IStation';
 import { Observable } from 'rxjs';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class StationsService {
   public stations: IStation[] = [];
   constructor(

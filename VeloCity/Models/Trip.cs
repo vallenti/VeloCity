@@ -5,9 +5,10 @@ namespace VeloCity.Models
 {
     public class Trip
     {
-        public Trip(ApplicationUser user, Bike bike)
+        public Trip(string userId, Bike bike)
         {
-            this.User = user;
+            this.UserId = userId;
+            this.BikeId = bike.Id;
             this.Bike = bike;
         }
 
@@ -28,10 +29,7 @@ namespace VeloCity.Models
         public virtual Bike Bike { get; private set; }
 
         [NotMapped]
-        public double TotalAmount => this.TotalMinutes * this.Bike.BikeType.PricePerMinute;
-
-        [NotMapped]
-        public int TotalMinutes => (End.Value - Start).Minutes;
+        public bool IsFinished => this.End.HasValue;
 
         public void Begin()
         {

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthorizeService } from '../../api-authorization/authorize.service';
 import { IMarker } from '../../interfaces/IMarker';
 import { StationsService } from '../../services/stations.service';
+import { TripService } from '../../services/trip.service';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +11,7 @@ import { StationsService } from '../../services/stations.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  public isAuthenticated?: Observable<boolean>;
   markers: IMarker[] = [];
   zoom = 12;
   center!: google.maps.LatLngLiteral;
@@ -19,11 +23,16 @@ export class HomeComponent implements OnInit {
     maxZoom: 15,
     minZoom: 4,
   }
-  constructor(private stationsService: StationsService) {
+  constructor(
+    private stationsService: StationsService,
+    private tripService: TripService,
+    private authorizeService: AuthorizeService
+    ) {
 
   }
 
   ngOnInit() {
+    this.isAuthenticated = this.authorizeService.isAuthenticated();
     this.center = {
       lat: 42.496820,
       lng: 27.417761,
@@ -42,7 +51,7 @@ export class HomeComponent implements OnInit {
           },
           label: {
             color: 'white',
-            text: station.capacity.toString(),
+            text: station.availableBikes.toString(),
           },
           title: station.name,
           options: {
@@ -51,6 +60,9 @@ export class HomeComponent implements OnInit {
         });
       }
     });
-   
+  }
+
+  endTrip(): void {
+    this.tripService.endTrip();
   }
 }

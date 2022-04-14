@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VeloCity.Data;
+using VeloCity.Dtos;
 using VeloCity.Models;
 
 namespace VeloCity.Controllers
@@ -14,22 +16,24 @@ namespace VeloCity.Controllers
     //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class BikesController : ControllerBase
+    public class BikesController : BaseAppController
     {
-        private readonly ApplicationDbContext _context;
-
-        public BikesController(ApplicationDbContext context)
+        public BikesController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager)
+            : base(context, userManager)
         {
-            _context = context;
         }
 
         // GET: api/Bikes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Bike>>> GetBikes()
+        public async Task<ActionResult<IEnumerable<BikeDto>>> GetBikes()
         {
-            return await _context.Bikes
+            return Ok((await _context.Bikes
                 .Include(b => b.BikeType)
-                .ToListAsync();
+                .Include(b => b.ParkedAt)
+                .ToListAsync())
+                .Select(bike => new BikeDto(bike)));
         }
 
         // GET: api/Bikes/5

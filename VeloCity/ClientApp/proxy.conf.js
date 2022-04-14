@@ -9,6 +9,8 @@ const PROXY_CONFIG = [
       "/api/stations",
       "/api/bikes",
       "/api/trips",
+      "/api/trips/start",
+      "/api/trips/end",
       "/_configuration",
       "/.well-known",
       "/Identity",

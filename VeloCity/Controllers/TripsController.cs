@@ -4,35 +4,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VeloCity.Data;
+using VeloCity.Dtos;
 using VeloCity.Models;
+using VeloCity.RequestModels;
 
 namespace VeloCity.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class TripsController : ControllerBase
+    public class TripsController : BaseAppController
     {
-        private readonly ApplicationDbContext _context;
-
-        private UserManager<ApplicationUser> _userManager;
-
-        public TripsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public TripsController(
+            ApplicationDbContext context, 
+            UserManager<ApplicationUser> userManager)
+            : base(context, userManager)
         {
-            _context = context;
-            _userManager = userManager;
         }
 
         // GET: api/Trips
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Trip>>> GetTrips()
         {
-            return await _context.Trips.ToListAsync();
+            return Ok((await _context.Trips
+                    .Include(t => t.User)
+                    .Include(t => t.Bike.BikeType)
+                    .Include(t => t.Bike.ParkedAt)
+                .ToListAsync())
+                .Select(t => new TripDto(t)));
         }
 
         // GET: api/Trips/5
@@ -83,42 +88,37 @@ namespace VeloCity.Controllers
         // POST: api/Trips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("start")]
-        public async Task<ActionResult<Trip>> StartTrip(int bikeId)
+        public async Task<ActionResult<Trip>> StartTrip([FromBody] TripCreateRequest request)
         {
-            var user = await _userManager.GetUserAsync(User);
-
-            var bike = this._context.Bikes.Find(bikeId);
-            var trip = new Trip(user, bike);
+            var bike = this._context.Bikes.Find(request.BikeCode);
+            var trip = new Trip(this.CurrentUserId, bike);
             trip.Begin();
             _context.Trips.Add(trip);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
-        }
-
-        [HttpPost("end/{id}")]
-        public async Task<IActionResult> EndTrip(int id)
-        {
-            var trip = await _context.Trips.FindAsync(id);
-            trip.Finish();
-
-            _context.Entry(trip).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!TripExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                var t= ex.ToString(); ;
             }
+
+            return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
+        }
+
+        [HttpPost("end")]
+        public async Task<IActionResult> EndTrip()
+        {
+            var trip = await _context.Trips
+                .Include(t => t.Bike)
+                .Where(t => t.UserId == this.CurrentUserId && !t.IsFinished)
+                .SingleAsync();
+
+            trip.Finish();
+
+            _context.Entry(trip).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

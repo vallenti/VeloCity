@@ -1,18 +1,20 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ITrip } from '../../interfaces/ITrip';
+import { TripService } from '../../services/trip.service';
 
 @Component({
   selector: 'app-trips',
   templateUrl: './trips.component.html',
   styleUrls: ['./trips.component.css']
 })
-export class TripsComponent {
+export class TripsComponent implements OnInit{
   public trips: ITrip[] = [];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<ITrip[]>(baseUrl + 'api/trips').subscribe(result => {
-      this.trips = result;
-    }, error => console.error(error));
+  constructor(private tripService: TripService) {
+
+  }
+
+  ngOnInit(): void {
+    this.tripService.loadStations().subscribe(trips => this.trips = trips);
   }
 }

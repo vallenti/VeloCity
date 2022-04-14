@@ -10,8 +10,8 @@
       <th>Край</th>
       <th>Потребител</th>
       <th>Велосипед</th>
+      <th>Време (минути)</th>
       <th>Сума</th>
-      <th>Време</th>
     </tr>
   </thead>
   <tbody>
@@ -19,10 +19,10 @@
       <td>{{ trip.id }}</td>
       <td>{{ trip.start }}</td>
       <td>{{ trip.end }}</td>
-      <td>{{ trip.userId }}</td>
+      <td>{{ trip.user }}</td>
       <td>{{ trip.bikeId }}</td>
-      <td>{{ trip.totalAmount }}</td>
       <td>{{ trip.totalMinutes }}</td>
+      <td>{{ trip.totalAmount | currency:"EUR":"symbol" }}</td>
     </tr>
   </tbody>
 </table>

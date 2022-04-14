@@ -15,6 +15,9 @@ import { StationsComponent } from './stations/stations.component';
 import { BikesComponent } from './bikes/bikes.component';
 import { TripsComponent } from './trips/trips.component';
 import { StationsService } from '../services/stations.service';
+import { TripStartComponent } from './trip-start/trip-start.component';
+import { TripService } from "../services/trip.service";
+import { AuthorizeService } from '../api-authorization/authorize.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { StationsService } from '../services/stations.service';
     HomeComponent,
     StationsComponent,
     BikesComponent,
-    TripsComponent
+    TripsComponent,
+    TripStartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,12 +40,15 @@ import { StationsService } from '../services/stations.service';
       //{ path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'stations', component: StationsComponent },
       { path: 'bikes', component: BikesComponent },
-      { path: 'trips', component: TripsComponent }
-    ])
+      { path: 'trips', component: TripsComponent, canActivate: [AuthorizeGuard] },
+      { path: 'trip/start', component: TripStartComponent, canActivate: [AuthorizeGuard] }
+    ]) 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
-    StationsService
+    StationsService,
+    TripService,
+    AuthorizeService
   ],
   bootstrap: [AppComponent]
 })

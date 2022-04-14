@@ -2,7 +2,7 @@ export interface ITrip {
   id: number;
   start: Date;
   end: Date | undefined;
-  userId: string;
+  user: string;
   bikeId: number;
   totalAmount: number;
   totalMinutes: number;

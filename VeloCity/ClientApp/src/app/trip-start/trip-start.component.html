@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Наемане на велосипед</h1>
+
+  <p>Въведете в полето номера изписан на рамката на велосипеда или сканирайте QR кода до него</p>
+
+  <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <div class="form-group">
+      <label for="processor">Код на велосипед</label>
+      <input type="text" class="form-control" id="bikeCode" name="bikeCode"
+             required
+             ngModel>
+    </div>
+
+    <button type="submit" class="btn btn-success">Наеми</button>
+  </form>
+</div>

@@ -1,10 +1,11 @@
 <h1>VeloCity App</h1>
 <p>Welcome to our single-page application</p>
 
-<button>Наеми велосипед</button>
-<span> | </span>
-<button>Върни велосипед</button>
-
+<button routerLink="/trip/start">Наеми велосипед</button>
+<span *ngIf="isAuthenticated | async">
+  <button (click)="endTrip()">Върни велосипед</button>
+</span>
+<br />
 <google-map height="500px"
             width="100%"
             [zoom]="zoom"
