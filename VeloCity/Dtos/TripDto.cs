@@ -33,9 +33,13 @@ namespace VeloCity.Dtos
 
         public virtual BikeDto Bike { get; private set; }
 
-        public double TotalAmount => this.TotalMinutes.HasValue ? this.TotalMinutes.Value * this.Bike.PricePerMinute : default;
+        public double TotalAmount => this.TotalMinutes.HasValue ? 
+            this.TotalMinutes.Value * this.Bike.PricePerMinute :
+            (DateTime.Now - StartDate).Minutes * this.Bike.PricePerMinute;
 
-        public int? TotalMinutes => EndDate.HasValue ? (EndDate.Value - StartDate).Minutes : default;
+        public int? TotalMinutes => EndDate.HasValue ? 
+            (EndDate.Value - StartDate).Minutes : 
+            (DateTime.Now - StartDate).Minutes;
 
     }
 }

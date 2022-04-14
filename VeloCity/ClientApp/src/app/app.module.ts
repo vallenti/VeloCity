@@ -18,6 +18,8 @@ import { StationsService } from '../services/stations.service';
 import { TripStartComponent } from './trip-start/trip-start.component';
 import { TripService } from "../services/trip.service";
 import { AuthorizeService } from '../api-authorization/authorize.service';
+import { TripCurrentComponent } from './trip-current/trip-current.component';
+import { StationsNewComponent } from './stations-new/stations-new.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { AuthorizeService } from '../api-authorization/authorize.service';
     StationsComponent,
     BikesComponent,
     TripsComponent,
-    TripStartComponent
+    TripStartComponent,
+    TripCurrentComponent,
+    StationsNewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,11 +41,11 @@ import { AuthorizeService } from '../api-authorization/authorize.service';
     GoogleMapsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      //{ path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'stations', component: StationsComponent },
       { path: 'bikes', component: BikesComponent },
       { path: 'trips', component: TripsComponent, canActivate: [AuthorizeGuard] },
-      { path: 'trip/start', component: TripStartComponent, canActivate: [AuthorizeGuard] }
+      { path: 'trip/start', component: TripStartComponent, canActivate: [AuthorizeGuard] },
+      { path: 'trips/current', component: TripCurrentComponent, canActivate: [AuthorizeGuard] },
     ]) 
   ],
   providers: [

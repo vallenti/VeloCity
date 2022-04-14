@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TripService } from '../../services/trip.service';
 
 @Component({
@@ -10,7 +11,9 @@ import { TripService } from '../../services/trip.service';
 export class TripStartComponent implements AfterViewInit  {
   @ViewChild('f') form!: NgForm
 
-  constructor(private tripService: TripService) { }
+  constructor(
+    private tripService: TripService,
+    private router: Router   ) { }
 
   ngAfterViewInit(): void {
     console.dir(this.form);
@@ -20,6 +23,8 @@ export class TripStartComponent implements AfterViewInit  {
     const content = this.form.value;
     console.log(content);
     this.tripService.startTrip(content.bikeCode).subscribe();
+    this.form.reset();
+    this.router.navigate(['/']);
   }
 
 }

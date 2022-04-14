@@ -11,7 +11,7 @@ namespace VeloCity.Dtos
             this.Status = bike.Status.ToBikeStatusString();
             this.BikeType = bike.BikeTypeId.ToBikeTypeString();
             this.PricePerMinute = bike.BikeType.PricePerMinute;
-            this.ParkedAt = bike.ParkedAt.Name;
+            this.ParkedAt = bike.ParkedAt?.Name;
         }
 
         public int Id { get; set; }

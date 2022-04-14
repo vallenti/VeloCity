@@ -11,7 +11,6 @@ import { TripService } from '../../services/trip.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public isAuthenticated?: Observable<boolean>;
   markers: IMarker[] = [];
   zoom = 12;
   center!: google.maps.LatLngLiteral;
@@ -23,16 +22,10 @@ export class HomeComponent implements OnInit {
     maxZoom: 15,
     minZoom: 4,
   }
-  constructor(
-    private stationsService: StationsService,
-    private tripService: TripService,
-    private authorizeService: AuthorizeService
-    ) {
-
-  }
+  constructor(private stationsService: StationsService) { }
 
   ngOnInit() {
-    this.isAuthenticated = this.authorizeService.isAuthenticated();
+    
     this.center = {
       lat: 42.496820,
       lng: 27.417761,
@@ -60,9 +53,5 @@ export class HomeComponent implements OnInit {
         });
       }
     });
-  }
-
-  endTrip(): void {
-    this.tripService.endTrip();
   }
 }

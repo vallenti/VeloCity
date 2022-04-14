@@ -34,13 +34,13 @@ namespace VeloCity.Models
         public void Begin()
         {
             this.Start = DateTime.Now;
-            this.Bike.Status = BikeStatus.Rented;
+            this.Bike.Rent();
         }
 
-        public void Finish()
+        public void Finish(int stationId)
         {
             this.End = DateTime.Now;
-            this.Bike.Status = BikeStatus.Available;
+            this.Bike.Park(stationId);
         }
 
     }

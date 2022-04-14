@@ -1,0 +1,21 @@
+<h1>Текущо наемане</h1>
+<p><strong>Номер:</strong>  {{ trip!.id }}</p>
+<p><strong>Начало:</strong>  {{ trip!.start }}</p>
+<p><strong>Велосипед:</strong>  {{ trip!.bikeId }}</p>
+<p><strong>Изминало време (минути):</strong>  {{ trip!.totalMinutes }}</p>
+<p><strong>Текуща сума:</strong>  {{ trip!.totalAmount | currency:"EUR":"symbol" }}</p>
+
+
+
+<p>Въведете в полето номера изписан на станцията или сканирайте QR кода</p>
+
+<form (ngSubmit)="onSubmit()" #f="ngForm">
+  <div class="form-group">
+    <label for="stationCode">Код на велостанция</label>
+    <input type="text" class="form-control" id="stationCode" name="stationCode"
+           required
+           ngModel>
+  </div>
+
+  <button type="submit" class="btn btn-success">Върни велосипед</button>
+</form>

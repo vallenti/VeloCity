@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthorizeService } from '../../api-authorization/authorize.service';
+import { ITrip } from '../../interfaces/ITrip';
+import { TripService } from '../../services/trip.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,12 +11,17 @@ import { AuthorizeService } from '../../api-authorization/authorize.service';
 })
 export class NavMenuComponent implements OnInit {
   public isAuthenticated?: Observable<boolean>;
-  constructor(private authorizeService: AuthorizeService) {
+  public hasCurrentTrip?: Observable<boolean>;
+
+  constructor(
+    private authorizeService: AuthorizeService,
+    private tripService: TripService) {
 
   }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authorizeService.isAuthenticated();
+    this.hasCurrentTrip = this.tripService.hasCurrentTrip();
   }
 
   isExpanded = false;

@@ -34,6 +34,10 @@
           <li *ngIf="isAuthenticated | async" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/bikes']">Велосипеди</a>
           </li>
+          <li *ngIf="hasCurrentTrip | async" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/trips/current']">Текущо пътуване</a>
+          </li>
+
         </ul>
         <app-login-menu></app-login-menu>
       </div>

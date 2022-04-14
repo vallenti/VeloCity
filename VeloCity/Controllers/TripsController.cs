@@ -36,6 +36,7 @@ namespace VeloCity.Controllers
                     .Include(t => t.User)
                     .Include(t => t.Bike.BikeType)
                     .Include(t => t.Bike.ParkedAt)
+                .Where(t => t.UserId == this.CurrentUserId)
                 .ToListAsync())
                 .Select(t => new TripDto(t)));
         }
@@ -52,6 +53,19 @@ namespace VeloCity.Controllers
             }
 
             return trip;
+        }
+
+        [HttpGet("current")]
+        public async Task<ActionResult<TripDto>> GetCurrentTrip()
+        {
+            var trip = await this.GetCurrentTripFromDb();
+
+            if (trip == null)
+            {
+                return null;
+            }
+            
+            return new TripDto(trip);
         }
 
         // PUT: api/Trips/5
@@ -107,14 +121,16 @@ namespace VeloCity.Controllers
         }
 
         [HttpPost("end")]
-        public async Task<IActionResult> EndTrip()
+        public async Task<IActionResult> EndTrip([FromBody] TripFinishRequest request)
         {
-            var trip = await _context.Trips
-                .Include(t => t.Bike)
-                .Where(t => t.UserId == this.CurrentUserId && !t.IsFinished)
-                .SingleAsync();
+            var trip = await this.GetCurrentTripFromDb();
 
-            trip.Finish();
+            if (trip == null)
+            {
+                return NotFound();
+            }
+
+            trip.Finish(request.StationCode);
 
             _context.Entry(trip).State = EntityState.Modified;
 
@@ -122,6 +138,14 @@ namespace VeloCity.Controllers
 
             return NoContent();
         }
+
+        private async Task<Trip> GetCurrentTripFromDb()
+            => await _context.Trips
+                .Include(t => t.Bike.BikeType)
+                .Include(t => t.Bike.ParkedAt)
+                .Include(t => t.User)
+                .Where(t => t.UserId == this.CurrentUserId && !t.End.HasValue)
+                .SingleOrDefaultAsync();
 
         // DELETE: api/Trips/5
         [HttpDelete("{id}")]

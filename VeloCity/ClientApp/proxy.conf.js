@@ -11,6 +11,7 @@ const PROXY_CONFIG = [
       "/api/trips",
       "/api/trips/start",
       "/api/trips/end",
+      "/api/trips/current",
       "/_configuration",
       "/.well-known",
       "/Identity",
