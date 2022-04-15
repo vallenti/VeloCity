@@ -1,1 +1,39 @@
-<p>bikes-new works!</p>
+<div class="container">
+  <h1>Добавяне на нов велосипед</h1>
+  <div *ngFor="let status of bikeStatuses">
+    <p>{{status.id}} {{status.name}}</p>
+  </div>
+
+  <div *ngFor="let type of bikeTypes">
+    <p>{{type.id}} {{type.name}}</p>
+  </div>
+
+  <div *ngFor="let station of bikeStations">
+    <p>{{station.id}} {{station.name}}</p>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <div class="form-group">
+      <label for="bikeType">Вид</label>
+      <input type="text" class="form-control" id="bikeType" name="bikeType"
+             required
+             ngModel>
+    </div>
+    <div class="form-group">
+      <label for="bikeStatus">Статус</label>
+      <input type="text" class="form-control" id="bikeStatus" name="bikeStatus"
+             required
+             ngModel>
+    </div>
+    <div class="form-group">
+      <label for="bikeStation">Станция</label>
+      <input type="text" class="form-control" id="bikeStation" name="bikeStation"
+             required
+             ngModel>
+    </div>
+
+    <button type="submit" class="btn btn-success">Добави</button>
+  </form>
+</div>
+
+

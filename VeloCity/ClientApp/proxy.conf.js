@@ -7,9 +7,12 @@ const PROXY_CONFIG = [
   {
     context: [
       "/api/stations",
+      "/api/stations/available",
       "/api/bikes",
       "/api/bikes/service",
       "/api/bikes/available",
+      "/api/bikes/statuses",
+      "/api/bikes/types",
       "/api/trips",
       "/api/trips/start",
       "/api/trips/end",

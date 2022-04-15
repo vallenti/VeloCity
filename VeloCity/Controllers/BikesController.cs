@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VeloCity.Data;
 using VeloCity.Dtos;
+using VeloCity.Extensions;
 using VeloCity.Models;
+using VeloCity.Models.Enums;
+using VeloCity.RequestModels;
 
 namespace VeloCity.Controllers
 {
@@ -34,6 +37,28 @@ namespace VeloCity.Controllers
                 .Include(b => b.ParkedAt)
                 .ToListAsync())
                 .Select(bike => new BikeDto(bike)));
+        }
+
+        [HttpGet("statuses")]
+        public IEnumerable<(int id, string name)> GetBikeStatuses()
+        {
+            return new List<(int id, string name)>()
+            {
+                (id: ((int)BikeStatus.Available), name: BikeStatus.Available.ToBikeStatusString()),
+                (id: ((int)BikeStatus.Service), name: BikeStatus.Service.ToBikeStatusString())
+            };
+        }
+
+        [HttpGet("types")]
+        public IEnumerable<(int id, string name)> GetBikeTypes()
+        {
+            return new List<(int id, string name)>()
+            {
+                (id: BikeType.Classic, name: BikeType.Classic.ToBikeTypeString()),
+                (id: BikeType.Road, name: BikeType.Road.ToBikeTypeString()),
+                (id: BikeType.Mountain, name: BikeType.Mountain.ToBikeTypeString()),
+                (id: BikeType.Electric, name: BikeType.Electric.ToBikeTypeString())
+            };
         }
 
         // GET: api/Bikes/5
@@ -65,6 +90,7 @@ namespace VeloCity.Controllers
 
             return Ok();
         }
+
 
         [HttpGet("available/{id}")]
         public async Task<IActionResult> MakeBikeAvailable(int id)
@@ -116,10 +142,16 @@ namespace VeloCity.Controllers
         // POST: api/Bikes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Bike>> PostBike(Bike bike)
+        public async Task<ActionResult<Bike>> PostBike([FromBody] BikeCreateRequest request)
         {
+            var bike = new Bike(request);
             _context.Bikes.Add(bike);
-            await _context.SaveChangesAsync();
+            try { await _context.SaveChangesAsync(); }
+            catch(Exception ex)
+            {
+                var x = ex;
+            }
+            
 
             return CreatedAtAction("GetBike", new { id = bike.Id }, bike);
         }

@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IStation } from '../interfaces/IStation';
 import { Observable } from 'rxjs';
+import { IDropdown } from '../interfaces/IDropdown';
 
 
 @Injectable()
@@ -14,6 +15,10 @@ export class StationsService {
 
   loadStations(): Observable<IStation[]> {
     return this.http.get<IStation[]>(this.baseUrl + 'api/stations');
+  }
+
+  getAvailableStations(): Observable<IDropdown[]> {
+    return this.http.get<IDropdown[]>(this.baseUrl + 'api/stations/available');
   }
 
   createStation(stationName: string, stationBikesCount: string, stationCoordinates: string): Observable<IStation> {

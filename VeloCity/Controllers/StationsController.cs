@@ -48,6 +48,15 @@ namespace VeloCity.Controllers
             return station;
         }
 
+        [HttpGet("available")]
+        public async Task<IEnumerable<(int id, string name)>> GetStationNames()
+        {
+            return (await _context.Stations
+                .Where(s => s.Capacity > s.ParkedBikes.Count())
+                .ToListAsync())
+                .Select(s => (id: s.Id, name: s.Name));
+        }
+
         // PUT: api/Stations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

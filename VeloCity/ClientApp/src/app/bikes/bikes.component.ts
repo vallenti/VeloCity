@@ -29,6 +29,11 @@ export class BikesComponent implements OnInit {
     this.reloadCurrentRoute();
   }
 
+  deleteBike(id: number): void {
+    this.bikeService.deleteBike(id);
+    this.reloadCurrentRoute();
+  }
+
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

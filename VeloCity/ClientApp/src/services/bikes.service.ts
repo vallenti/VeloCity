@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IBike } from '../interfaces/IBike';
+import { IDropdown } from '../interfaces/IDropdown';
 
 @Injectable()
 export class BikesService {
@@ -15,12 +16,12 @@ export class BikesService {
     return this.http.get<IBike[]>(this.baseUrl + 'api/bikes');
   }
 
-  createBike(stationName: string, stationBikesCount: string, stationCoordinates: string): Observable<IBike> {
+  createBike(bikeType: number, bikeStatus: number, bikeStation: number): Observable<IBike> {
     return this.http.post<IBike>(this.baseUrl + 'api/bikes', {
-      stationName: stationName,
-      stationBikesCount: +stationBikesCount,
-      stationCoordinates: stationCoordinates
-    })
+      bikeType: bikeType,
+      bikeStatus: bikeStatus,
+      bikeStation: bikeStation
+    });
   }
 
   serviceBike(id: number): void {
@@ -33,5 +34,13 @@ export class BikesService {
 
   deleteBike(id: number) {
     this.http.delete(this.baseUrl + 'api/bikes/' + id).subscribe();
+  }
+
+  getBikeStatuses(): Observable<IDropdown[]> {
+    return this.http.get<IDropdown[]>(this.baseUrl + 'api/bikes/statuses');
+  }
+
+  getBikeTypes(): Observable<IDropdown[]> {
+    return this.http.get<IDropdown[]>(this.baseUrl + 'api/bikes/types');
   }
 }

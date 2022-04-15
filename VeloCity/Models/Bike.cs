@@ -1,9 +1,19 @@
 ﻿using VeloCity.Models.Enums;
+using VeloCity.RequestModels;
 
 namespace VeloCity.Models
 {
     public class Bike
     {
+        public Bike(BikeCreateRequest bike)
+        {
+            this.BikeTypeId = bike.BikeType;
+            this.ParkedAtId = bike.BikeStation;
+            this.Status = (BikeStatus)bike.BikeStatus;
+        }
+
+        public Bike() { }
+
         public int Id { get; set; }
 
         public BikeStatus Status { get; set; }

@@ -24,7 +24,7 @@
         <button *ngIf="bike.status === 'Налично'" (click)="serviceBike(bike.id)">Сервизирай</button>
         <button *ngIf="bike.status === 'Техническо обслуване'" (click)="makeBikeAvailable(bike.id)">Върни в движение</button>
         <span> | </span>
-        <button>Изтрий</button>
+        <button (click)="deleteBike(bike.id)">Изтрий</button>
       </td>
     </tr>
   </tbody>
