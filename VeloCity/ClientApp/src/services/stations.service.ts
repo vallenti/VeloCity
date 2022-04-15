@@ -15,4 +15,16 @@ export class StationsService {
   loadStations(): Observable<IStation[]> {
     return this.http.get<IStation[]>(this.baseUrl + 'api/stations');
   }
+
+  createStation(stationName: string, stationBikesCount: string, stationCoordinates: string): Observable<IStation> {
+    return this.http.post<IStation>(this.baseUrl + 'api/stations', {
+      stationName: stationName,
+      stationBikesCount: +stationBikesCount,
+      stationCoordinates: stationCoordinates
+    })
+  }
+
+  deleteStation(id: number) {
+    this.http.delete(this.baseUrl + 'api/stations/' + id).subscribe();
+  }
 }

@@ -2,6 +2,7 @@
 <p>Welcome to our single-page application, where you can register/login/rent a bike</p>
 
 <button routerLink="/trip/start">Наеми велосипед</button>
+<button *ngIf="hasCurrentTrip | async" routerLink="/trips/current">Текущо наемане</button>
 
 <br />
 <google-map height="500px"

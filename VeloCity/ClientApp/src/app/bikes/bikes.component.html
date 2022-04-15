@@ -2,7 +2,7 @@
 
 <p *ngIf="!bikes"><em>Loading...</em></p>
 
-<button>Добави велосипед</button>
+<button routerLink="/bikes/new">Добави велосипед</button>
 
 <table class='table table-striped' *ngIf="bikes">
   <thead>
@@ -21,9 +21,10 @@
       <td>{{ bike.bikeType }}</td>
       <td>{{ bike.parkedAt }}</td>
       <td>
-        <a href="#">Редатирай</a>
+        <button *ngIf="bike.status === 'Налично'" (click)="serviceBike(bike.id)">Сервизирай</button>
+        <button *ngIf="bike.status === 'Техническо обслуване'" (click)="makeBikeAvailable(bike.id)">Върни в движение</button>
         <span> | </span>
-        <a href="#">Изтрий</a>
+        <button>Изтрий</button>
       </td>
     </tr>
   </tbody>

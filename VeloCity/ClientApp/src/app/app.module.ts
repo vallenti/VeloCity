@@ -20,6 +20,8 @@ import { TripService } from "../services/trip.service";
 import { AuthorizeService } from '../api-authorization/authorize.service';
 import { TripCurrentComponent } from './trip-current/trip-current.component';
 import { StationsNewComponent } from './stations-new/stations-new.component';
+import { BikesNewComponent } from './bikes-new/bikes-new.component';
+import { BikesService } from '../services/bikes.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { StationsNewComponent } from './stations-new/stations-new.component';
     TripsComponent,
     TripStartComponent,
     TripCurrentComponent,
-    StationsNewComponent
+    StationsNewComponent,
+    BikesNewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,8 +44,10 @@ import { StationsNewComponent } from './stations-new/stations-new.component';
     GoogleMapsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'stations', component: StationsComponent },
-      { path: 'bikes', component: BikesComponent },
+      { path: 'stations', component: StationsComponent, canActivate: [AuthorizeGuard] },
+      { path: 'stations/new', component: StationsNewComponent, canActivate: [AuthorizeGuard] },
+      { path: 'bikes', component: BikesComponent, canActivate: [AuthorizeGuard] },
+      { path: 'bikes/new', component: BikesNewComponent, canActivate: [AuthorizeGuard] },
       { path: 'trips', component: TripsComponent, canActivate: [AuthorizeGuard] },
       { path: 'trip/start', component: TripStartComponent, canActivate: [AuthorizeGuard] },
       { path: 'trips/current', component: TripCurrentComponent, canActivate: [AuthorizeGuard] },
@@ -52,6 +57,7 @@ import { StationsNewComponent } from './stations-new/stations-new.component';
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
     StationsService,
     TripService,
+    BikesService,
     AuthorizeService
   ],
   bootstrap: [AppComponent]

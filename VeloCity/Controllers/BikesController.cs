@@ -50,6 +50,38 @@ namespace VeloCity.Controllers
             return bike;
         }
 
+        [HttpGet("service/{id}")]
+        public async Task<IActionResult> ServiceBike(int id)
+        {
+            var bike = await _context.Bikes.FindAsync(id);
+
+            if (bike == null)
+            {
+                return NotFound();
+            }
+
+            bike.Service();
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpGet("available/{id}")]
+        public async Task<IActionResult> MakeBikeAvailable(int id)
+        {
+            var bike = await _context.Bikes.FindAsync(id);
+
+            if (bike == null)
+            {
+                return NotFound();
+            }
+
+            bike.Park(bike.LastParkedAt ?? 1);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         // PUT: api/Bikes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

@@ -16,15 +16,25 @@ namespace VeloCity.Models
 
         public virtual Station ParkedAt { get; set; }
 
+        public int? LastParkedAt { get; set; }
+
         public void Park(int stationCode)
         {
             this.ParkedAtId = stationCode;
             this.Status = BikeStatus.Available;
+            this.LastParkedAt = stationCode;
         }
 
         public void Rent() {
             this.ParkedAtId = null;
             this.Status = BikeStatus.Rented;
-        } 
+        }
+
+        public void Service()
+        {
+            this.Status = BikeStatus.Service;
+            this.LastParkedAt = this.ParkedAtId;
+            this.ParkedAtId = null;
+        }
     }
 }

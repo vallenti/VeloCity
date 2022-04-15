@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthorizeService } from '../../api-authorization/authorize.service';
 import { IMarker } from '../../interfaces/IMarker';
 import { StationsService } from '../../services/stations.service';
 import { TripService } from '../../services/trip.service';
@@ -11,6 +10,7 @@ import { TripService } from '../../services/trip.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  public hasCurrentTrip?: Observable<boolean>;
   markers: IMarker[] = [];
   zoom = 12;
   center!: google.maps.LatLngLiteral;
@@ -22,10 +22,12 @@ export class HomeComponent implements OnInit {
     maxZoom: 15,
     minZoom: 4,
   }
-  constructor(private stationsService: StationsService) { }
+  constructor(private stationsService: StationsService,
+    private tripService: TripService) { }
 
   ngOnInit() {
-    
+    this.hasCurrentTrip = this.tripService.hasCurrentTrip();
+
     this.center = {
       lat: 42.496820,
       lng: 27.417761,
@@ -44,7 +46,7 @@ export class HomeComponent implements OnInit {
           },
           label: {
             color: 'white',
-            text: station.availableBikes.toString(),
+            text: this.hasCurrentTrip ? station.availableBikes.toString() : station.parkedBikesCount.toString(),
           },
           title: station.name,
           options: {

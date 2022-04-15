@@ -2,13 +2,14 @@
 
 <p *ngIf="!stations"><em>Loading...</em></p>
 
-<button>Добави станция</button>
+<button routerLink="/stations/new">Добави станция</button>
 
 <table class='table table-striped' *ngIf="stations">
   <thead>
     <tr>
       <th>Име</th>
       <th>Налични велосипеди</th>
+      <th>Свободни места</th>
       <th>Координати</th>
       <th>Последно актуализирано</th>
       <th></th>
@@ -17,13 +18,14 @@
   <tbody>
     <tr *ngFor="let station of stations">
       <td>{{ station.name }}</td>
-      <td>{{ station.availableBikes }} / {{ station.capacity }}</td>
+      <td>{{ station.parkedBikesCount }} / {{ station.capacity }}</td>
+      <td>{{ station.availableBikes }}</td>
       <td>{{ station.latitude }}, {{ station.longitude }}</td>
       <td>{{ station.updatedAt }}</td>
       <td>
         <a href="#">Редатирай</a>
         <span> | </span>
-        <a href="#">Изтрий</a>
+        <button (click)="deleteStation(station.id)">Изтрий</button>
       </td>
     </tr>
   </tbody>

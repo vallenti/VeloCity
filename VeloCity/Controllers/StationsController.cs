@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using VeloCity.Data;
 using VeloCity.Dtos;
 using VeloCity.Models;
+using VeloCity.RequestModels;
 
 namespace VeloCity.Controllers
 {
@@ -81,12 +82,13 @@ namespace VeloCity.Controllers
         // POST: api/Stations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Station>> PostStation(Station station)
+        public async Task<ActionResult<StationDto>> PostStation([FromBody] StationCreateRequest request)
         {
+            var station = new Station(request);
             _context.Stations.Add(station);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStation", new { id = station.Id }, station);
+            return CreatedAtAction("GetStation", new { id = station.Id }, new StationDto(station));
         }
 
         // DELETE: api/Stations/5

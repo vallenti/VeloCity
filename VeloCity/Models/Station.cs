@@ -1,9 +1,21 @@
 ﻿using System.Collections.ObjectModel;
+using VeloCity.RequestModels;
 
 namespace VeloCity.Models
 {
     public class Station
     {
+        public Station(StationCreateRequest request)
+        {
+            this.Name = request.StationName;
+            this.Capacity = request.StationBikesCount;
+            var coordinates = request.stationCoordinates.Split(',').ToArray();
+            this.Latitude = double.Parse(coordinates[0]);
+            this.Longitude = double.Parse(coordinates[1]);
+        }
+
+        public  Station() { }
+        
         public int Id { get; set; }
 
         public string Name { get; set; }
