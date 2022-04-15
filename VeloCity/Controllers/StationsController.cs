@@ -36,7 +36,7 @@ namespace VeloCity.Controllers
 
         // GET: api/Stations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Station>> GetStation(int id)
+        public async Task<ActionResult<StationDto>> GetStation(int id)
         {
             var station = await _context.Stations.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace VeloCity.Controllers
                 return NotFound();
             }
 
-            return station;
+            return new StationDto(station);
         }
 
         [HttpGet("available")]
@@ -60,12 +60,10 @@ namespace VeloCity.Controllers
         // PUT: api/Stations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStation(int id, Station station)
+        public async Task<IActionResult> PutStation(int id, StationCreateRequest request)
         {
-            if (id != station.Id)
-            {
-                return BadRequest();
-            }
+            var station = _context.Stations.Find(id);
+            station.Update(request);
 
             _context.Entry(station).State = EntityState.Modified;
 

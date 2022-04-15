@@ -17,12 +17,24 @@ export class StationsService {
     return this.http.get<IStation[]>(this.baseUrl + 'api/stations');
   }
 
+  loadStation(id: number): Observable<IStation> {
+    return this.http.get<IStation>(this.baseUrl + 'api/stations/' + id);
+  }
+
   getAvailableStations(): Observable<IDropdown[]> {
     return this.http.get<IDropdown[]>(this.baseUrl + 'api/stations/available');
   }
 
   createStation(stationName: string, stationBikesCount: string, stationCoordinates: string): Observable<IStation> {
     return this.http.post<IStation>(this.baseUrl + 'api/stations', {
+      stationName: stationName,
+      stationBikesCount: +stationBikesCount,
+      stationCoordinates: stationCoordinates
+    })
+  }
+
+  updateStation(id: number, stationName: string, stationBikesCount: string, stationCoordinates: string): Observable<IStation> {
+    return this.http.put<IStation>(this.baseUrl + 'api/stations/' + id, {
       stationName: stationName,
       stationBikesCount: +stationBikesCount,
       stationCoordinates: stationCoordinates

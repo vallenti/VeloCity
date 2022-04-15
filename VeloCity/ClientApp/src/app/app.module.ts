@@ -23,6 +23,7 @@ import { StationsNewComponent } from './stations-new/stations-new.component';
 import { BikesNewComponent } from './bikes-new/bikes-new.component';
 import { BikesService } from '../services/bikes.service';
 import { CurrencyBGNPipe } from './pipes/currencyBGN.pipe';
+import { StationsUpdateComponent } from './stations-update/stations-update.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CurrencyBGNPipe } from './pipes/currencyBGN.pipe';
     TripCurrentComponent,
     StationsNewComponent,
     BikesNewComponent,
-    CurrencyBGNPipe
+    CurrencyBGNPipe,
+    StationsUpdateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,6 +50,7 @@ import { CurrencyBGNPipe } from './pipes/currencyBGN.pipe';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'stations', component: StationsComponent, canActivate: [AuthorizeGuard] },
       { path: 'stations/new', component: StationsNewComponent, canActivate: [AuthorizeGuard] },
+      { path: 'stations/update/:id', component: StationsUpdateComponent, canActivate: [AuthorizeGuard] },
       { path: 'bikes', component: BikesComponent, canActivate: [AuthorizeGuard] },
       { path: 'bikes/new', component: BikesNewComponent, canActivate: [AuthorizeGuard] },
       { path: 'trips', component: TripsComponent, canActivate: [AuthorizeGuard] },

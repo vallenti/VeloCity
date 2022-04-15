@@ -7,11 +7,7 @@ namespace VeloCity.Models
     {
         public Station(StationCreateRequest request)
         {
-            this.Name = request.StationName;
-            this.Capacity = request.StationBikesCount;
-            var coordinates = request.stationCoordinates.Split(',').ToArray();
-            this.Latitude = double.Parse(coordinates[0]);
-            this.Longitude = double.Parse(coordinates[1]);
+            this.Update(request);
         }
 
         public  Station() { }
@@ -31,5 +27,14 @@ namespace VeloCity.Models
         public DateTime UpdatedAt { get; set; }
 
         public virtual ICollection<Bike> ParkedBikes { get; set; } = new Collection<Bike>();
+
+        public void Update(StationCreateRequest request)
+        {
+            this.Name = request.StationName;
+            this.Capacity = request.StationBikesCount;
+            var coordinates = request.stationCoordinates.Split(',').ToArray();
+            this.Latitude = double.Parse(coordinates[0]);
+            this.Longitude = double.Parse(coordinates[1]);
+        }
     }
 }

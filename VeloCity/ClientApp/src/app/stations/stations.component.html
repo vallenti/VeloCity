@@ -23,7 +23,7 @@
       <td>{{ station.latitude }}, {{ station.longitude }}</td>
       <td>{{ station.updatedAt }}</td>
       <td>
-        <a href="#">Редатирай</a>
+        <button [routerLink]="['update', station.id]">Редатирай</button>
         <span> | </span>
         <button (click)="deleteStation(station.id)">Изтрий</button>
       </td>
