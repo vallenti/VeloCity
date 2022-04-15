@@ -22,6 +22,7 @@ import { TripCurrentComponent } from './trip-current/trip-current.component';
 import { StationsNewComponent } from './stations-new/stations-new.component';
 import { BikesNewComponent } from './bikes-new/bikes-new.component';
 import { BikesService } from '../services/bikes.service';
+import { CurrencyBGNPipe } from './pipes/currencyBGN.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BikesService } from '../services/bikes.service';
     TripStartComponent,
     TripCurrentComponent,
     StationsNewComponent,
-    BikesNewComponent
+    BikesNewComponent,
+    CurrencyBGNPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
