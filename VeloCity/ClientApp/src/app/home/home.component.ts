@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
           },
           label: {
             color: 'white',
-            text: this.hasCurrentTrip ? station.availableBikes.toString() : station.parkedBikesCount.toString(),
+            text: station.parkedBikesCount.toString(),
           },
           title: station.name,
           options: {

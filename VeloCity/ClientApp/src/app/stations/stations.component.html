@@ -17,10 +17,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let station of stations">
-      <td>{{ station.name }}</td>
+      <td>{{ station.name }} ({{ station.id }})</td>
       <td>{{ station.parkedBikesCount }} / {{ station.capacity }}</td>
       <td>{{ station.availableBikes }}</td>
-      <td>{{ station.latitude }}, {{ station.longitude }}</td>
+      <td>{{ station.latitude | number:'1.2-6'}}, {{ station.longitude | number:'1.2-6'}}</td>
       <td>{{ station.updatedAt }}</td>
       <td>
         <button [routerLink]="['update', station.id]">Редатирай</button>
