@@ -4,13 +4,18 @@
   <p>Въведете в полето номера изписан на рамката на велосипеда или сканирайте QR кода до него</p>
 
   <form (ngSubmit)="onSubmit()" #f="ngForm">
-    <div class="form-group">
+    <div class="col-md-6">
       <label for="bikeCode">Код на велосипед</label>
       <input type="text" class="form-control" id="bikeCode" name="bikeCode"
              required
-             ngModel>
+             [ngModel]="bikeQRCodeId">
+
+    </div>
+    <div class="col-md-6">
+      <button type="submit" class="btn btn-success">Наеми</button>
     </div>
 
-    <button type="submit" class="btn btn-success">Наеми</button>
+    <zxing-scanner #scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+
   </form>
 </div>

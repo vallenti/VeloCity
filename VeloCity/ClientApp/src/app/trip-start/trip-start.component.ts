@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TripService } from '../../services/trip.service';
@@ -10,13 +11,18 @@ import { TripService } from '../../services/trip.service';
 })
 export class TripStartComponent implements AfterViewInit  {
   @ViewChild('f') form!: NgForm
+  @ViewChild('scanner', { static: false }) scanner!: ZXingScannerComponent;
+  bikeQRCodeId: string | undefined;
 
   constructor(
     private tripService: TripService,
     private router: Router   ) { }
 
   ngAfterViewInit(): void {
-    console.dir(this.form);
+    
+  }
+  onCodeResult(event: any): void {
+    this.bikeQRCodeId = event;
   }
 
   onSubmit() {

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps'
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -24,6 +25,7 @@ import { BikesNewComponent } from './bikes-new/bikes-new.component';
 import { BikesService } from '../services/bikes.service';
 import { CurrencyBGNPipe } from './pipes/currencyBGN.pipe';
 import { StationsUpdateComponent } from './stations-update/stations-update.component';
+import { NotFoundPageComponent } from '../not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { StationsUpdateComponent } from './stations-update/stations-update.compo
     StationsNewComponent,
     BikesNewComponent,
     CurrencyBGNPipe,
-    StationsUpdateComponent
+    StationsUpdateComponent,
+    NotFoundPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,6 +49,7 @@ import { StationsUpdateComponent } from './stations-update/stations-update.compo
     FormsModule,
     ApiAuthorizationModule,
     GoogleMapsModule,
+    ZXingScannerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'stations', component: StationsComponent, canActivate: [AuthorizeGuard] },
@@ -56,6 +60,7 @@ import { StationsUpdateComponent } from './stations-update/stations-update.compo
       { path: 'trips', component: TripsComponent, canActivate: [AuthorizeGuard] },
       { path: 'trip/start', component: TripStartComponent, canActivate: [AuthorizeGuard] },
       { path: 'trips/current', component: TripCurrentComponent, canActivate: [AuthorizeGuard] },
+      { path: '**', component: NotFoundPageComponent }
     ]) 
   ],
   providers: [

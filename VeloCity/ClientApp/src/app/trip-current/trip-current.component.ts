@@ -15,6 +15,8 @@ export class TripCurrentComponent implements OnInit, AfterViewInit {
   @ViewChild('f') form!: NgForm
   trip!: ITrip | null;
   isAuthenticated?: Observable<boolean>;
+  bikeQRCodeId: string | undefined;
+
   constructor(
     private authorizeService: AuthorizeService,
     private tripService: TripService,
@@ -27,6 +29,10 @@ export class TripCurrentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     console.dir(this.form);
+  }
+
+  onCodeResult(event: any): void {
+    this.bikeQRCodeId = event;
   }
 
   onSubmit() {
