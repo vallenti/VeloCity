@@ -15,3 +15,7 @@ On the home page there is a map with station locations an information about avai
 
 Used technologies and libraries
 Angular, NG GoogleMaps API, .NET 5, EF Core
+
+To Run the project you should run the beckend (.Net Core API) and install dependencies for the project with "npm install", install Angluar/CLI "npm install angular/cli" then "ng serve" in the terminal.
+
+If you use Visual Studio just clone the project, open it with Visual Studio and "Run" the project. It automatically run the beckend and angular app simultaneously.
